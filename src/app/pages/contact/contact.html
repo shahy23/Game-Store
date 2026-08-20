@@ -1,0 +1,76 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h2 class="fw-bold mb-2 text-center">Get in Touch</h2>
+      <p class="text-secondary text-center mb-5">Questions, feedback, or partnership ideas — we'd love to hear from you.</p>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm text-center p-3 h-100">
+            <i class="bi bi-envelope fs-3 text-info mb-2"></i>
+            <h6 class="fw-semibold">Email</h6>
+            <p class="text-secondary small mb-0">support&#64;nexusplay.com</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm text-center p-3 h-100">
+            <i class="bi bi-telephone fs-3 text-info mb-2"></i>
+            <h6 class="fw-semibold">Phone</h6>
+            <p class="text-secondary small mb-0">+1 (555) 010-2024</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm text-center p-3 h-100">
+            <i class="bi bi-geo-alt fs-3 text-info mb-2"></i>
+            <h6 class="fw-semibold">Office</h6>
+            <p class="text-secondary small mb-0">Cairo, Egypt</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm p-4 mt-4">
+        @if (submitted) {
+          <div class="alert alert-success">
+            <i class="bi bi-check-circle-fill me-2"></i>Thanks! Your message has been sent. We'll get back to you soon.
+          </div>
+        }
+        <form #contactForm="ngForm" (ngSubmit)="submit(contactForm)" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small">Name</label>
+              <input class="form-control" name="name" required [(ngModel)]="name" #n="ngModel" [class.is-invalid]="n.invalid && n.touched" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                required
+                email
+                [(ngModel)]="email"
+                #e="ngModel"
+                [class.is-invalid]="e.invalid && e.touched"
+              />
+            </div>
+            <div class="col-12">
+              <label class="form-label small">Message</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                name="message"
+                required
+                [(ngModel)]="message"
+                #m="ngModel"
+                [class.is-invalid]="m.invalid && m.touched"
+              ></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-info text-dark fw-semibold mt-3">
+            <i class="bi bi-send me-2"></i>Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

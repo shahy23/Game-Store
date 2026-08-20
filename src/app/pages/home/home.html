@@ -1,0 +1,68 @@
+<!-- Hero -->
+<section class="hero-gradient text-light py-5">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <span class="badge bg-brand-cyan text-dark fw-semibold mb-3 px-3 py-2">New drops every week</span>
+        <h1 class="display-4 fw-bold mb-3">Level up your library.</h1>
+        <p class="lead text-light opacity-75 mb-4">
+          Discover, buy, and play the best games across PS5, Xbox, PC and Switch — with deals you won't find anywhere else.
+        </p>
+        <div class="d-flex gap-3">
+          <a routerLink="/products" class="btn btn-info btn-lg text-dark fw-semibold">
+            <i class="bi bi-shop me-2"></i>Browse Store
+          </a>
+          <a routerLink="/products" [queryParams]="{sort: 'newest'}" class="btn btn-outline-light btn-lg">
+            What's New
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 d-none d-lg-block text-center">
+        <i class="bi bi-controller display-1" style="font-size: 14rem; color: rgba(245,179,1,0.28);"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="container py-5">
+  <h3 class="section-title fw-bold mb-4">Shop by Category</h3>
+  <div class="row g-3">
+    @for (cat of categories; track cat) {
+      <div class="col-6 col-md-3">
+        <a
+          [routerLink]="['/products']"
+          [queryParams]="{ category: cat }"
+          class="card text-decoration-none text-reset border-0 shadow-sm h-100 text-center py-4"
+        >
+          <i class="bi {{ categoryIcon(cat) }} fs-2 text-info mb-2"></i>
+          <div class="fw-semibold">{{ cat }}</div>
+        </a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Featured games -->
+<section class="container py-5">
+  <div class="d-flex justify-content-between align-items-end mb-4">
+    <h3 class="section-title fw-bold mb-0">Featured Games</h3>
+    <a routerLink="/products" class="text-decoration-none small fw-semibold text-info">View all <i class="bi bi-arrow-right"></i></a>
+  </div>
+  <div class="row g-4">
+    @for (game of featured; track game.id) {
+      <div class="col-6 col-md-4 col-lg-3">
+        <app-game-card [game]="game"></app-game-card>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Promo banner -->
+<section class="container pb-5">
+  <div class="rounded-4 p-5 text-center" style="background: linear-gradient(90deg, #f5b301, #ffd24c); color:#1c1a13;">
+    <h3 class="fw-bold mb-2">Weekend Sale — Up to 40% Off</h3>
+    <p class="mb-4" style="opacity:0.8;">Grab this weekend's hottest deals before they're gone.</p>
+    <a routerLink="/products" class="btn btn-dark btn-lg fw-semibold">Shop the Sale</a>
+  </div>
+</section>

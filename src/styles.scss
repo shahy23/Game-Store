@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --bs-body-bg: #fffdf7;
+  --brand-ink: #1c1a13;
+  --brand-charcoal: #2b2718;
+  --brand-gold: #f5b301;
+  --brand-gold-soft: #ffd24c;
+  --brand-cream: #fff8e6;
+
+  /* Re-theme Bootstrap's "info" role to gold so text-info / bg-info / btn-info
+     and btn-outline-info read correctly across the whole app */
+  --bs-info: var(--brand-gold);
+  --bs-info-rgb: 245, 179, 1;
+  --bs-info-text-emphasis: #7a5c00;
+  --bs-info-bg-subtle: #fff3d0;
+  --bs-info-border-subtle: #ffe08a;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bs-body-bg);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at 20% 20%, var(--brand-charcoal) 0%, var(--brand-ink) 55%, #0c0a06 100%);
+}
+
+.text-brand-cyan {
+  color: var(--brand-gold) !important;
+}
+
+.bg-brand-cyan {
+  background-color: var(--brand-gold) !important;
+  color: var(--brand-ink) !important;
+}
+
+.game-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(15, 12, 41, 0.18) !important;
+}
+
+.btn-info {
+  --bs-btn-bg: var(--brand-gold);
+  --bs-btn-border-color: var(--brand-gold);
+  --bs-btn-hover-bg: var(--brand-gold-soft);
+  --bs-btn-hover-border-color: var(--brand-gold-soft);
+  --bs-btn-color: var(--brand-ink);
+  --bs-btn-hover-color: var(--brand-ink);
+}
+
+.btn-outline-info {
+  --bs-btn-color: #8a6a00;
+  --bs-btn-border-color: var(--brand-gold);
+  --bs-btn-hover-bg: var(--brand-gold);
+  --bs-btn-hover-border-color: var(--brand-gold);
+  --bs-btn-hover-color: var(--brand-ink);
+  --bs-btn-active-bg: var(--brand-gold);
+  --bs-btn-active-color: var(--brand-ink);
+}
+
+.link-underline-opacity-0 {
+  text-decoration: none;
+}
+.link-underline-opacity-0:hover {
+  color: var(--brand-gold) !important;
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand-gold), var(--brand-gold-soft));
+}
+
+.category-pill.active {
+  background: var(--brand-ink) !important;
+  color: #fff !important;
+  border-color: var(--brand-ink) !important;
+}
+
+/* Cards / surfaces get a warm cream tint instead of stark white */
+.card {
+  background-color: #ffffff;
+}
+
+.bg-dark {
+  background-color: var(--brand-ink) !important;
+}
+

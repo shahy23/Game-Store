@@ -1,0 +1,80 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0 shadow-sm p-4">
+        <div class="text-center mb-4">
+          <i class="bi bi-controller display-5 text-info"></i>
+          <h3 class="fw-bold mt-2">Create Account</h3>
+          <p class="text-secondary small mb-0">Join NexusPlay and start your collection.</p>
+        </div>
+
+        <form #registerForm="ngForm" (ngSubmit)="submit(registerForm)" novalidate>
+          <div class="mb-3">
+            <label class="form-label small">Full Name</label>
+            <input
+              class="form-control"
+              name="fullName"
+              required
+              [(ngModel)]="fullName"
+              #fullNameModel="ngModel"
+              [class.is-invalid]="fullNameModel.invalid && fullNameModel.touched"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              required
+              email
+              [(ngModel)]="email"
+              #emailModel="ngModel"
+              [class.is-invalid]="emailModel.invalid && emailModel.touched"
+            />
+            @if (emailModel.invalid && emailModel.touched) {
+              <div class="invalid-feedback">Please enter a valid email.</div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              required
+              minlength="6"
+              [(ngModel)]="password"
+              #passwordModel="ngModel"
+              [class.is-invalid]="passwordModel.invalid && passwordModel.touched"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small">Confirm Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="confirmPassword"
+              required
+              [(ngModel)]="confirmPassword"
+              #confirmModel="ngModel"
+              [class.is-invalid]="(confirmModel.touched && !passwordsMatch)"
+            />
+            @if (confirmModel.touched && !passwordsMatch) {
+              <div class="invalid-feedback">Passwords do not match.</div>
+            }
+          </div>
+
+          <button type="submit" class="btn btn-info text-dark fw-semibold w-100">Sign Up</button>
+        </form>
+
+        <p class="text-center small text-secondary mt-4 mb-0">
+          Already have an account? <a routerLink="/login" class="text-info fw-semibold text-decoration-none">Log In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

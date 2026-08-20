@@ -1,0 +1,135 @@
+@if (game) {
+  <div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav class="mb-4 small">
+      <a routerLink="/" class="text-decoration-none text-secondary">Home</a>
+      <span class="mx-2 text-secondary">/</span>
+      <a routerLink="/products" class="text-decoration-none text-secondary">Store</a>
+      <span class="mx-2 text-secondary">/</span>
+      <span class="text-dark fw-semibold">{{ game.title }}</span>
+    </nav>
+
+    <div class="row g-5">
+      <!-- Image -->
+      <div class="col-lg-5">
+        <div class="rounded-4 overflow-hidden shadow-sm">
+          <img [src]="game.image" [alt]="game.title" class="w-100" />
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="col-lg-7">
+        <span class="badge bg-secondary-subtle text-secondary-emphasis mb-2">{{ game.category }}</span>
+        <h1 class="fw-bold mb-2">{{ game.title }}</h1>
+
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <app-star-rating [rating]="game.rating"></app-star-rating>
+          <span class="text-secondary small">({{ game.reviewsCount }} reviews)</span>
+        </div>
+
+        <div class="mb-3">
+          @for (p of game.platform; track p) {
+            <span class="badge bg-dark me-1">{{ p }}</span>
+          }
+        </div>
+
+        <div class="mb-4">
+          @if (game.discountPrice) {
+            <span class="text-decoration-line-through text-secondary fs-5 me-2">${{ game.price }}</span>
+            <span class="fw-bold text-info display-6">${{ game.discountPrice }}</span>
+          } @else {
+            <span class="fw-bold display-6">${{ game.price }}</span>
+          }
+        </div>
+
+        <p class="text-secondary mb-4">{{ game.description }}</p>
+
+        <div class="mb-3 small">
+          @if (game.stock > 10) {
+            <span class="text-success"><i class="bi bi-check-circle-fill me-1"></i>In Stock ({{ game.stock }} available)</span>
+          } @else if (game.stock > 0) {
+            <span class="text-warning"><i class="bi bi-exclamation-circle-fill me-1"></i>Low Stock — only {{ game.stock }} left!</span>
+          } @else {
+            <span class="text-danger"><i class="bi bi-x-circle-fill me-1"></i>Out of Stock</span>
+          }
+        </div>
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="input-group" style="width: 130px;">
+            <button class="btn btn-outline-secondary" (click)="changeQuantity(-1)">−</button>
+            <span class="form-control text-center">{{ quantity }}</span>
+            <button class="btn btn-outline-secondary" (click)="changeQuantity(1)">+</button>
+          </div>
+
+          <button class="btn btn-info text-dark fw-semibold flex-grow-1" [disabled]="game.stock === 0" (click)="addToCart()">
+            <i class="bi bi-cart-plus me-2"></i>{{ justAdded ? 'Added!' : 'Add to Cart' }}
+          </button>
+
+          <button
+            class="btn rounded-circle"
+            [class.btn-danger]="wishlist.isWishlisted(game.id)"
+            [class.btn-outline-secondary]="!wishlist.isWishlisted(game.id)"
+            (click)="wishlist.toggle(game)"
+          >
+            <i class="bi" [class.bi-heart-fill]="wishlist.isWishlisted(game.id)" [class.bi-heart]="!wishlist.isWishlisted(game.id)"></i>
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'description'" (click)="activeTab = 'description'">Description</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'details'" (click)="activeTab = 'details'">Details</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Reviews</button>
+          </li>
+        </ul>
+
+        <div class="border border-top-0 rounded-bottom p-4">
+          @if (activeTab === 'description') {
+            <p class="mb-0 text-secondary">{{ game.description }}</p>
+          }
+          @if (activeTab === 'details') {
+            <table class="table table-sm mb-0">
+              <tbody>
+                <tr><th class="text-secondary fw-normal">Developer</th><td>{{ game.developer }}</td></tr>
+                <tr><th class="text-secondary fw-normal">Release Date</th><td>{{ game.releaseDate | date: 'longDate' }}</td></tr>
+                <tr><th class="text-secondary fw-normal">Platforms</th><td>{{ game.platform.join(', ') }}</td></tr>
+                <tr>
+                  <th class="text-secondary fw-normal">Tags</th>
+                  <td>
+                    @for (t of game.tags; track t) {
+                      <span class="badge bg-light text-dark border me-1">{{ t }}</span>
+                    }
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          }
+          @if (activeTab === 'reviews') {
+            <p class="text-secondary mb-0">
+              This game has an average rating of {{ game.rating }} / 5 from {{ game.reviewsCount }} players. Detailed reviews coming soon!
+            </p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Related games -->
+    @if (related.length > 0) {
+      <section class="mt-5">
+        <h4 class="section-title fw-bold mb-4">You Might Also Like</h4>
+        <div class="row g-4">
+          @for (g of related; track g.id) {
+            <div class="col-6 col-md-3">
+              <app-game-card [game]="g"></app-game-card>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
+}

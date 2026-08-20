@@ -1,0 +1,162 @@
+<div class="container py-5">
+  @if (orderPlaced) {
+    <div class="text-center py-5">
+      <i class="bi bi-check-circle-fill display-1 text-success"></i>
+      <h2 class="fw-bold mt-3">Order Confirmed!</h2>
+      <p class="text-secondary">Thank you for your purchase. Your order number is <strong>{{ orderNumber }}</strong>.</p>
+      <p class="text-secondary small">A confirmation email has been sent to you. Your games will be ready to download shortly.</p>
+      <button class="btn btn-info text-dark fw-semibold mt-3" (click)="backToStore()">Continue Shopping</button>
+    </div>
+  } @else if (cart.items().length === 0) {
+    <div class="text-center py-5">
+      <i class="bi bi-cart-x display-1 text-secondary"></i>
+      <p class="text-secondary mt-3">Your cart is empty.</p>
+      <a routerLink="/products" class="btn btn-info text-dark fw-semibold">Browse Store</a>
+    </div>
+  } @else {
+    <h2 class="fw-bold mb-4">Checkout</h2>
+
+    <form #checkoutForm="ngForm" (ngSubmit)="placeOrder(checkoutForm)" novalidate>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm p-4 mb-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-truck me-2"></i>Shipping Information</h5>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label small">Full Name</label>
+                <input
+                  class="form-control"
+                  name="fullName"
+                  required
+                  [(ngModel)]="shipping.fullName"
+                  #fullName="ngModel"
+                  [class.is-invalid]="fullName.invalid && fullName.touched"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label small">Address</label>
+                <input
+                  class="form-control"
+                  name="address"
+                  required
+                  [(ngModel)]="shipping.address"
+                  #address="ngModel"
+                  [class.is-invalid]="address.invalid && address.touched"
+                />
+              </div>
+              <div class="col-md-5">
+                <label class="form-label small">City</label>
+                <input
+                  class="form-control"
+                  name="city"
+                  required
+                  [(ngModel)]="shipping.city"
+                  #city="ngModel"
+                  [class.is-invalid]="city.invalid && city.touched"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label small">ZIP</label>
+                <input
+                  class="form-control"
+                  name="zip"
+                  required
+                  [(ngModel)]="shipping.zip"
+                  #zip="ngModel"
+                  [class.is-invalid]="zip.invalid && zip.touched"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small">Country</label>
+                <input
+                  class="form-control"
+                  name="country"
+                  required
+                  [(ngModel)]="shipping.country"
+                  #country="ngModel"
+                  [class.is-invalid]="country.invalid && country.touched"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm p-4">
+            <h5 class="fw-bold mb-3"><i class="bi bi-credit-card me-2"></i>Payment Details</h5>
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label small">Name on Card</label>
+                <input
+                  class="form-control"
+                  name="cardName"
+                  required
+                  [(ngModel)]="payment.cardName"
+                  #cardName="ngModel"
+                  [class.is-invalid]="cardName.invalid && cardName.touched"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label small">Card Number</label>
+                <input
+                  class="form-control"
+                  name="cardNumber"
+                  required
+                  pattern="[0-9]{16}"
+                  placeholder="16 digits"
+                  [(ngModel)]="payment.cardNumber"
+                  #cardNumber="ngModel"
+                  [class.is-invalid]="cardNumber.invalid && cardNumber.touched"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">Expiry (MM/YY)</label>
+                <input
+                  class="form-control"
+                  name="expiry"
+                  required
+                  placeholder="MM/YY"
+                  [(ngModel)]="payment.expiry"
+                  #expiry="ngModel"
+                  [class.is-invalid]="expiry.invalid && expiry.touched"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label small">CVV</label>
+                <input
+                  class="form-control"
+                  name="cvv"
+                  required
+                  pattern="[0-9]{3,4}"
+                  [(ngModel)]="payment.cvv"
+                  #cvv="ngModel"
+                  [class.is-invalid]="cvv.invalid && cvv.touched"
+                />
+              </div>
+            </div>
+            <p class="text-secondary small mt-3 mb-0"><i class="bi bi-lock-fill me-1"></i>This is a demo store — no real payment is processed.</p>
+          </div>
+        </div>
+
+        <!-- Order summary -->
+        <div class="col-lg-5">
+          <div class="card border-0 shadow-sm p-4 sticky-top" style="top: 90px;">
+            <h5 class="fw-bold mb-3">Order Summary</h5>
+            @for (item of cart.items(); track item.game.id) {
+              <div class="d-flex justify-content-between small mb-2">
+                <span>{{ item.game.title }} × {{ item.quantity }}</span>
+                <span>${{ ((item.game.discountPrice ?? item.game.price) * item.quantity).toFixed(2) }}</span>
+              </div>
+            }
+            <hr />
+            <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+              <span>Total</span>
+              <span>${{ cart.totalPrice().toFixed(2) }}</span>
+            </div>
+            <button type="submit" class="btn btn-info text-dark fw-semibold">
+              <i class="bi bi-bag-check me-2"></i>Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  }
+</div>
