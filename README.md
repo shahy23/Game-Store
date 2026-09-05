@@ -20,7 +20,7 @@ npm install
 npm start
 ```
 
-Then open http://localhost:4200 in your browser.
+Then open https://game-store-shahinda.vercel.app/ in your browser.
 
 ## Build for production
 
